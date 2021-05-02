@@ -7,7 +7,7 @@ comm = MPI.COMM_WORLD
 worldSize = comm.Get_size()
 rank = comm.Get_rank()
 
-MATRIX_FACTOR = 100
+MATRIX_FACTOR = 1
 MATRIX_SIZE = (worldSize - 1) * MATRIX_FACTOR
 
 
@@ -61,6 +61,7 @@ def master_op():
         for j in range(MATRIX_FACTOR):
             for k in range(len(worker_res[0])):
                 mtx3[skip + j][k] = worker_res[j][k]
+        log("Received from Worker {0}:\n{1}\nCurrent Result:\n{2}\n\n".format(i, str(DataFrame(worker_res)), str(DataFrame(mtx3))))
 
     log("Matrix 1:\n{0}\nMatrix 2:\n{1}\nResult:\n{2}".format(str(DataFrame(mtx1)), str(DataFrame(mtx2)),
                                                               str(DataFrame(mtx3))))
